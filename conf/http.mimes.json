@@ -18,6 +18,7 @@
 	"csh": "application/x-csh",
 	"css": "text/css",
 	"dcr": "application/x-director",
+	"default": "application/octet-stream",
 	"dif": "video/x-dv",
 	"dir": "application/x-director",
 	"djv": "image/vnd.djvu",
