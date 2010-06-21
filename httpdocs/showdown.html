@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Markdown Test</title>
+<style type="text/css">
+body {
+	font: 18px calibri, consolas, tahoma, verdana, serif;
+}
+h2 {
+	display: block;
+	text-align: center;
+}
+textarea {
+	display: block;
+	width: 500px;
+	height: 200px;
+	margin: 50px auto;
+}
+
+#output td, th {
+	font-size: inherit;
+	font-family: inherit;
+	border: 1px #000 solid;
+}
+#output table {
+	border-collapse: collapse;
+	font: inherit;
+}
+</style>
+<script type="text/javascript" src="js/showdown.min.js"></script>
+</head>
+<body>
+<h2>Input:</h2>
+<textarea id="input" rows="16" cols="32"></textarea>
+<h2>Output:</h2>
+<div id="output"></div>
+<script type="text/javascript">
+(function () {
+	var input, output, converter;
+	input = document.getElementById('input');
+	output = document.getElementById('output');
+	converter = new Showdown.converter();
+	
+	input.onkeydown = input.onkeyup = function () {
+		var text = input.value.replace(/</g, '&lt;');
+		window.foo = text;
+		// allow basic html
+		text = text.replace(/&lt;\s*(\/)?(table|td|tr|tbody|thead|th|b|i|strong|u|strike|del|kbd|code|address)(?:\b|>).*?>/ig, '<$1$2>');
+		
+		// allow escaping of <
+		text = text.replace(/\\(<|&lt;)/g, '&lt;');
+		
+		// force markdown to process inside tables
+		text = text.replace(/<(td|th)>([^<]+)(<\/\1>)/ig, function (a, b, c, d) {
+			return ['<', b, '>', converter.makeHtml(c), d].join('');
+		});
+		
+		window.bar = text;
+		output.innerHTML = converter.makeHtml(text);
+	};
+}());
+</script>
+</body>
+</html>
