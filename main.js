@@ -7,10 +7,11 @@ Database.open = function () {
 	var conn = DriverManager.getConnection('jdbc:mysql://localhost/wikiteks', 'root', '');
 	return ({
 		query: function (sql) {
-			var result;
+			var result = false;
 			try {
 				result = conn.prepareStatement(sql).executeQuery(sql);
 			} catch (e) {
+				print(e.message);
 				result = false;
 			}
 			
