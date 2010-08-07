@@ -1,0 +1,10 @@
+[
+	{
+		"hosts": ["localhost", "127.0.0.1"],
+		"path": "/local",
+		"controller": "Test"
+	}, {
+		"hosts": ["javaunlimited.net", "www.javaunlimited.net"],
+		"path": "/java"
+	}
+];
