@@ -4,6 +4,6 @@
 		"application": "lib/localhost.js"
 	}, {
 		"hosts": ["blog.loc", "www.blog.loc"],
-		"application": "~/Projects/blog/main.js"
+		"application": "~/Projects/JavaScript/blog/main.js"
 	}
 ]
