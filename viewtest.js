@@ -9,7 +9,7 @@ String.prototype.escapeQuotes = function () {
 
 function flushOutput() {
 	if (outputBuffer.length) {
-		instructions.push("output.push('" + outputBuffer.escapeQuotes() + "');");
+		instructions.push("output.push('" + outputBuffer.escapeQuotes().replace(/(\r?\n)/g, '\\r\\n\\$1') + "');");
 		outputBuffer = '';
 	}
 }
@@ -57,4 +57,4 @@ if (mode === modes.OUTPUT) {
 	flushScript();
 }
 
-print(instructions.join('\n'));
+//print(instructions.join('\n'));
