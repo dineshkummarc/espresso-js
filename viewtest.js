@@ -7,9 +7,16 @@ String.prototype.escapeQuotes = function () {
 	return self;
 };
 
+String.prototype.escapeNewlines = function () {
+	return (
+		this.replace(/\r?\n$/, '') // remove trailing newline
+		.replace(/(\r?\n)/g, '\\r\\n\\$1') // escape other newlines
+	);
+};
+
 function flushOutput() {
 	if (outputBuffer.length) {
-		instructions.push("output.push('" + outputBuffer.escapeQuotes().replace(/(\r?\n)/g, '\\r\\n\\$1') + "');");
+		instructions.push("output.push('" + outputBuffer.escapeQuotes().escapeNewlines() + "');");
 		outputBuffer = '';
 	}
 }
