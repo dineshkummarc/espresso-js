@@ -21,7 +21,7 @@ function flushOutput() {
 	}
 }
 function flushScript() {
-	instructions.push(outputBuffer);
+	instructions.push(outputBuffer.replace(/^\s+/, ''));
 	outputBuffer = '';
 }
 
