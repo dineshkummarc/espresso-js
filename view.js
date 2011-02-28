@@ -1,9 +1,10 @@
-<% var x = 10; %>
+<? var x = 10; ?>
+<? function echo(s) { output.print('' + s); } ?>
 <html>
 <body>
 Here's that variable:
-<% for (var j = 0;j < x; j += 1) { %>
-Repeated <% echo(j); %> times
-<% } %>
+<? for (var j = 0;j < x; j += 1) { ?>
+Repeated <? echo(j); ?> times
+<? } ?>
 </body>
 </html>

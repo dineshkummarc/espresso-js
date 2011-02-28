@@ -1,10 +1,7 @@
-var output = [];
-function echo(s) {
-	output.push(s);
-}
+var output = java.lang.System.out;
 
 load('viewtest.js');
-
 print(instructions.join('\n'));
-eval(instructions.join('\n'));
-print(output.join(''));
+var view = eval(instructions.join('\n'));
+view({}, output);
+//print(output.join(''));

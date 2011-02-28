@@ -15,14 +15,18 @@ String.prototype.escapeNewlines = function () {
 };
 
 function flushOutput() {
-	if (outputBuffer.length) {
-		instructions.push("output.push('" + outputBuffer.escapeQuotes().escapeNewlines() + "');");
+	var output = outputBuffer.escapeQuotes().escapeNewlines();
+	if (output.length) {
+		instructions.push("output.print('" + output + "');");
 		outputBuffer = '';
 	}
 }
 function flushScript() {
-	instructions.push(outputBuffer.replace(/^\s+/, ''));
-	outputBuffer = '';
+	var script = outputBuffer.replace(/^\s+/, '');
+	if (script.length) {
+		instructions.push(script);
+		outputBuffer = '';
+	}
 }
 
 var input = readFile('view.js');
@@ -38,7 +42,7 @@ var mode = modes.OUTPUT;
 var position = 0;
 while (position < input.length) {
 	if (mode === modes.OUTPUT) {
-		if (input.substr(position, 2) === '<%') {
+		if (input.substr(position, 2) === '<?') {
 			flushOutput();
 			mode = modes.SCRIPT;
 			position += 1;
@@ -46,7 +50,7 @@ while (position < input.length) {
 			outputBuffer += input.charAt(position);
 		}
 	} else if (mode === modes.SCRIPT) {
-		if (input.substr(position, 2) === '%>') {
+		if (input.substr(position, 2) === '?>') {
 			flushScript();
 			mode = modes.OUTPUT;
 			position += 1;
@@ -63,5 +67,8 @@ if (mode === modes.OUTPUT) {
 } else {
 	flushScript();
 }
+
+instructions.unshift('function (context, output) {');
+instructions.push('}');
 
 //print(instructions.join('\n'));
