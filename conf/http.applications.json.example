@@ -1,6 +1,0 @@
-[
-	{
-		"hosts": ["localhost", "127.0.0.1"],
-		"application": "lib/localhost.js"
-	}
-]
