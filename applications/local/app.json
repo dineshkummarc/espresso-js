@@ -1,0 +1,5 @@
+{
+	"name": "localserver",
+	"hosts": ["127.0.0.1", "localhost"],
+	"application": "localhost.js"
+}
