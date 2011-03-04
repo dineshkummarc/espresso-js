@@ -7,7 +7,7 @@
 		file = new File('httpdocs' + request.resource);
 		if (file.exists() && !file.isDirectory()) {
 			if (/.jsv$/.test(request.resource)) {
-				this.serveView('httpdocs' + request.resource, request.output);
+				this.serveView('httpdocs' + request.resource, request);
 			} else {
 				HTTPServer.serveFile(request, file);
 			}
@@ -26,21 +26,21 @@
 
 		message = message.join('<br/>');
 		
-		this.sendResponseHeaders(200, {'content-type': 'text/html'}, request.output, message.length);
+		this.sendResponseHeaders(200, {'content-type': 'text/html'}, request, message.length);
 		request.output.print(message);
 	};
 
 	/* Serve PHP-like dynamic files */
-	LocalServer.prototype.serveView = function (file, output) {
+	LocalServer.prototype.serveView = function (file, request) {
 		var data, view, headers, out = new HTTPOutputStream();
 		headers = {'content-type': 'text/html'};
 		view = HTTPViewParser.parse(readFile(file));
 
-		view(out, {}, headers);
+		view(out, request, {}, headers, this);
 		data = out.getBuffer();
 
-		this.sendResponseHeaders(headers.httpCode || 200, headers, output, data.length);
-		output.print(data);
+		this.sendResponseHeaders(headers.httpCode || 200, headers, request, data.length);
+		request.output.print(data);
 	};
 
 	/* Example WebSocket that echoes input */
