@@ -2,14 +2,14 @@
 (function () {
 	var LocalServer = HTTPApplication.extend();
 
-	LocalServer.prototype.processRequest = function (request, client, input, output) {
+	LocalServer.prototype.processRequest = function (request) {
 		/* Serve a static file, if it exists */
 		file = new File('httpdocs' + request.resource);
 		if (file.exists() && !file.isDirectory()) {
 			if (/.jsv$/.test(request.resource)) {
-				this.serveView('httpdocs' + request.resource, output);
+				this.serveView('httpdocs' + request.resource, request.output);
 			} else {
-				HTTPServer.serveFile(request, output, file);
+				HTTPServer.serveFile(request, file);
 			}
 
 			return;
@@ -19,14 +19,15 @@
 		var message = [], key, value;
 		message.push('Hello, browser!');
 		message.push('');
-		for ([key, value] in request) {
+		
+		for ([key, value] in JSON.parse(request.toJSON())) {
 			message.push(key + ' = ' + (typeof value === 'object' && JSON.stringify(value) || value));
 		}
-		
+
 		message = message.join('<br/>');
 		
-		this.sendResponseHeaders(200, {'content-type': 'text/html'}, output, message.length);
-		output.print(message);
+		this.sendResponseHeaders(200, {'content-type': 'text/html'}, request.output, message.length);
+		request.output.print(message);
 	};
 
 	/* Serve PHP-like dynamic files */
