@@ -4,10 +4,10 @@
 
 	LocalServer.prototype.processRequest = function (request) {
 		/* Serve a static file, if it exists */
-		file = new File('httpdocs' + request.resource);
+		file = new File(this.getFilePath('httpdocs' + request.resource));
 		if (file.exists() && !file.isDirectory()) {
 			if (/.jsv$/.test(request.resource)) {
-				this.serveView('httpdocs' + request.resource, request);
+				this.serveView(file, request);
 			} else {
 				HTTPServer.serveFile(request, file);
 			}
@@ -34,7 +34,7 @@
 	LocalServer.prototype.serveView = function (file, request) {
 		var data, view, headers, out = new HTTPOutputStream();
 		headers = {'content-type': 'text/html'};
-		view = HTTPViewParser.parse(readFile(file));
+		view = HTTPViewParser.parse(readFile('' + file));
 
 		view(out, request, {}, headers, this);
 		data = out.getBuffer();

@@ -1,4 +1,2 @@
-^httpdocs/*
 ^applications/*
 ^extensions/*
-^conf/http.applications.json$
