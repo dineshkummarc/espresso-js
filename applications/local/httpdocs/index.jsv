@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>localhost debug/example</title>
+</head>
+<body>
+Hello, browser!
+<ul>
+<?
+	var key, value;
+	for ([key, value] in JSON.parse(request.toJSON())) { ?>
+<li><? echo(key); ?> = <? echo(typeof value === 'object' && JSON.stringify(value) || value); ?></li>
+<?	} ?>
+</ul>
+</body>
+</html>

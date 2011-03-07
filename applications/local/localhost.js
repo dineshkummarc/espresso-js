@@ -3,6 +3,10 @@
 	var LocalServer = HTTPApplication.extend();
 
 	LocalServer.prototype.processRequest = function (request) {
+		if (/^\/$/.test(request.resource)) {
+			request.resource = '/index.jsv';
+		}
+
 		/* Serve a static file, if it exists */
 		file = new File(this.getFilePath('httpdocs' + request.resource));
 		if (file.exists() && !file.isDirectory()) {
@@ -10,19 +14,6 @@
 			return;
 		}
 
-		/* Serve a dynamic/debug message */
-		var message = [], key, value;
-		message.push('Hello, browser!');
-		message.push('');
-		
-		for ([key, value] in JSON.parse(request.toJSON())) {
-			message.push(key + ' = ' + (typeof value === 'object' && JSON.stringify(value) || value));
-		}
-
-		message = message.join('<br/>');
-		
-		this.sendResponseHeaders(200, {'content-type': 'text/html'}, request, message.length);
-		request.output.print(message);
 	};
 
 	/* Example WebSocket that echoes input */
