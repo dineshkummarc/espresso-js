@@ -8,12 +8,7 @@
 		}
 
 		/* Serve a static file, if it exists */
-		file = new File(this.getFilePath('httpdocs' + request.resource));
-		if (file.exists() && !file.isDirectory()) {
-			this.serveRoot(request);
-			return;
-		}
-
+		this.serveRoot(request, 'httpdocs');
 	};
 
 	/* Example WebSocket that echoes input */
