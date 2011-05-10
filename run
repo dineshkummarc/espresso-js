@@ -1,1 +1,1 @@
-java -jar lib/js.jar lib/http.js $1
+java -jar lib/js.jar lib/http.js
