@@ -1,1 +1,1 @@
-java -jar lib/js.jar lib/http.js
+java -cp .:lib/ssl.jar:lib/js.jar org.mozilla.javascript.tools.shell.Main lib/http.js
