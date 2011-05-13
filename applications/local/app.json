@@ -4,8 +4,7 @@
 		{
 			"hostname": "127.0.0.1",
 			"ports": [1234]
-		},
-		{
+		}, {
 			"hostname": "localhost",
 			"ports": [1234]
 		}
